@@ -158,7 +158,7 @@ main(void)
   // Read and run input commands.
   while(getcmd(buf, sizeof(buf)) >= 0){
     if(buf[0] == 'c' && buf[1] == 'd' && buf[2] == ' '){
-      // Chdir must be called by the parent, not the child.
+      // Chdir must be called by the parent, not the child. Chdir必须由父进程调用，而不是子进程。
       buf[strlen(buf)-1] = 0;  // chop \n
       if(chdir(buf+3) < 0)
         fprintf(2, "cannot cd %s\n", buf+3);
@@ -166,7 +166,7 @@ main(void)
     }
     if(fork1() == 0)
       runcmd(parsecmd(buf));
-    wait(0);
+    wait(0);  // 等待原本父进程(fork1>0)的子进程(fork1==0)，等待子进程（fork1==0）的子进程（exec）
   }
   exit(0);
 }

@@ -7,7 +7,7 @@
 #include "syscall.h"
 #include "defs.h"
 
-// Fetch the uint64 at addr from the current process.
+// Fetch the uint64 at addr from the current process. 从当前进程获取地址为addr的uint64值。
 int
 fetchaddr(uint64 addr, uint64 *ip)
 {
@@ -53,7 +53,7 @@ argraw(int n)
   return -1;
 }
 
-// Fetch the nth 32-bit system call argument.
+// Fetch the nth 32-bit system call argument. 获取第n个32位系统调用参数。
 int
 argint(int n, int *ip)
 {

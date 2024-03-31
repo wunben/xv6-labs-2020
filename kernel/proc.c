@@ -31,8 +31,8 @@ procinit(void)
   for(p = proc; p < &proc[NPROC]; p++) {
       initlock(&p->lock, "proc");
 
-      // Allocate a page for the process's kernel stack.
-      // Map it high in memory, followed by an invalid
+      // Allocate a page for the process's kernel stack. 为进程的内核栈分配一页。
+      // Map it high in memory, followed by an invalid  将其映射到高内存中，然后是无效的保护页。
       // guard page.
       char *pa = kalloc();
       if(pa == 0)
@@ -63,7 +63,7 @@ mycpu(void) {
   return c;
 }
 
-// Return the current struct proc *, or zero if none.
+// Return the current struct proc *, or zero if none.  返回当前struct proc *，如果没有则返回0。
 struct proc*
 myproc(void) {
   push_off();
@@ -496,7 +496,7 @@ scheduler(void)
 // kernel thread, not this CPU. It should
 // be proc->intena and proc->noff, but that would
 // break in the few places where a lock is held but
-// there's no process.
+// there's no process. 切换到调度器。必须只持有p-&gt;锁，并且已经改变了进程状态。保存和恢复intena，因为intena是这个内核线程的属性，而不是这个CPU的属性。它应该是proc-&gt;intena和proc-&gt;noff，但这将在少数几个锁被持有但没有进程的地方中断。
 void
 sched(void)
 {
@@ -549,15 +549,15 @@ forkret(void)
   usertrapret();
 }
 
-// Atomically release lock and sleep on chan.
-// Reacquires lock when awakened.
+// Atomically release lock and sleep on chan. 原子性地释放锁并在chan上休眠。
+// Reacquires lock when awakened.  当被唤醒时重新获得锁。
 void
 sleep(void *chan, struct spinlock *lk)
 {
   struct proc *p = myproc();
   
   // Must acquire p->lock in order to
-  // change p->state and then call sched.
+  // change p->state and then call sched. 必须获得p->lock才能改变p->state，然后调用sched。
   // Once we hold p->lock, we can be
   // guaranteed that we won't miss any wakeup
   // (wakeup locks p->lock),

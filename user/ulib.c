@@ -43,6 +43,7 @@ memset(void *dst, int c, uint n)
   return dst;
 }
 
+// 字符匹配
 char*
 strchr(const char *s, char c)
 {

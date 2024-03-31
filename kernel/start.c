@@ -20,14 +20,14 @@ extern void timervec();
 void
 start()
 {
-  // set M Previous Privilege mode to Supervisor, for mret.
+  // set M Previous Privilege mode to Supervisor, for mret. 对于mret，将M先前的特权模式设置为Supervisor。
   unsigned long x = r_mstatus();
   x &= ~MSTATUS_MPP_MASK;
   x |= MSTATUS_MPP_S;
   w_mstatus(x);
 
-  // set M Exception Program Counter to main, for mret.
-  // requires gcc -mcmodel=medany
+  // set M Exception Program Counter to main, for mret. 设置M异常程序计数器为main，用于mret。
+  // requires gcc -mcmodel=medany  GCC 编译器的一个选项，用于指定生成代码时使用的内存模型。
   w_mepc((uint64)main);
 
   // disable paging for now.
