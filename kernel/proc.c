@@ -693,3 +693,9 @@ procdump(void)
     printf("\n");
   }
 }
+
+uint64
+getnproc(){
+  uint64 nproc=0;
+  return nproc;
+}
