@@ -99,13 +99,20 @@ sys_uptime(void)
 
 uint64
 sys_sysinfo(void){
-  uint64 temp;
-  struct sysinfo* ret;
+  struct proc *p = myproc();
+  uint64 proc_add;  // 存放struct sysinfo*地址在虚拟地址上
+  struct sysinfo temp;
 
-  if(argaddr(0, &temp) < 0)
+  // 读取地址
+  if(argaddr(0, &proc_add) < 0)
     return -1;
-  ret = (struct sysinfo*)temp;
-  ret->freemem = getfreemem();
-  ret->nproc = getnproc();
-  return temp;
+  
+  temp.freemem = getfreemem();
+  // printf("freemem:%d\n",temp.freemem);
+  temp.nproc = getnproc();
+
+  // 从内核空间拷贝数据到用户空间
+  if(copyout(p->pagetable, proc_add, (char *)&temp, sizeof(temp)) < 0)
+      return -1;
+  return 0;
 }

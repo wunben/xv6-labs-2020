@@ -130,6 +130,8 @@ usertrapret(void)
 
 // interrupts and exceptions from kernel code go here via kernelvec,
 // on whatever the current kernel stack is.
+// 内核代码中的中断和异常通过kernelvec到达这里，
+// 无论当前内核堆栈是什么。
 void 
 kerneltrap()
 {

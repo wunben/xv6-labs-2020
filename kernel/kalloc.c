@@ -85,13 +85,17 @@ kalloc(void)
 // 获取空闲内存量
 uint64 
 getfreemem(){
-  uint64 freemem=1;
+  uint64 freemem=0;
   struct run *temp = kmem.freelist;
-  while(temp->next) {
+
+  acquire(&kmem.lock);
+  while(temp) {
     // printf("%d\n", temp->next);
-    freemem+=1;
+    freemem += 1;
     temp = temp->next;
   }
+  release(&kmem.lock);
+
   // printf("遍历完成\n");
   return freemem*4096;
 }
