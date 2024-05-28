@@ -110,6 +110,7 @@ sys_sysinfo(void){
   temp.freemem = getfreemem();
   // printf("freemem:%d\n",temp.freemem);
   temp.nproc = getnproc();
+  // printf("nproc:%d\n",temp.nproc);
 
   // 从内核空间拷贝数据到用户空间
   if(copyout(p->pagetable, proc_add, (char *)&temp, sizeof(temp)) < 0)

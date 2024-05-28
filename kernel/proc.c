@@ -697,5 +697,12 @@ procdump(void)
 uint64
 getnproc(){
   uint64 nproc=0;
+  struct proc *pp;
+  for(pp = proc; pp < &proc[NPROC]; pp++){
+      acquire(&pp->lock);
+      if(pp->state!=UNUSED) nproc+=1;
+
+      release(&pp->lock);
+  }
   return nproc;
 }
